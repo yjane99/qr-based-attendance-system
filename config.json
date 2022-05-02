@@ -1,0 +1,15 @@
+{
+	"params":
+	{
+		"local_server":"True",
+		"local_uri":"mysql://root:@localhost/attendence",
+		"prod_uri":"mysql://root:@localhost/attendence",
+		"fb_url":"https://facebook.com/attendence",
+		"tw_url":"https://twitter.com/attendence",
+		"git_url":"https://github.com/attendence",
+		"gmail_user":"techteam@gmail.com",
+		"gmail_password":"Google@12345"
+
+
+	}
+}

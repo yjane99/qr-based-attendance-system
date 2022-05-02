@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <h1>Student Attendence</h1>
+
+
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Sid</th>
+                            <th>Branch</th>
+                            <th>Section</th>
+                            <th>Year</th>
+                            <th>Period</th>
+                            <th>Time</th>
+                            <th>Date</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for register in regi %}
+
+                        <tr>
+                            <td>{{register.id}}</td>
+                            <td>{{register.Sid}}</td>
+                            <td>{{register.branch}}</td>
+                            <td>{{register.Sec}}</td>
+                            <td>{{register.Year}}</td>
+                            <td>{{register.Period}}</td>
+                            <td>{{register.Time}}</td>
+                            <td>{{register.Date}}</td>
+
+
+
+                        </tr>
+
+
+
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <!-- Pager -->
+
+            </div>
+        </div>
+    </div>
+
+    <p>Total Count : {{myresult}}</p><br>
+    <th>
+        <b>Student Id wise total count of attended lectures:<br></b></th>
+    <td>
+        {{result}}
+    </td>
+
+
+
+    </body>
+
+</html>

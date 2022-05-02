@@ -1,0 +1,192 @@
+@import 'bootstrap/bootstrap';
+@import 'bootstrap/variables';
+@import 'bootstrap/mixins';
+
+$font-primary: 'Lato',Arial, sans-serif;
+$primary: #1089ff;
+
+@mixin gradient-background(){
+	background: rgba(3,96,237,1);
+	background: -moz-linear-gradient(45deg, rgba(3,96,237,1) 0%, rgba(255,93,177,1) 100%);
+	background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(3,96,237,1)), color-stop(100%, rgba(255,93,177,1)));
+	background: -webkit-linear-gradient(45deg, rgba(3,96,237,1) 0%, rgba(255,93,177,1) 100%);
+	background: -o-linear-gradient(45deg, rgba(3,96,237,1) 0%, rgba(255,93,177,1) 100%);
+	background: -ms-linear-gradient(45deg, rgba(3,96,237,1) 0%, rgba(255,93,177,1) 100%);
+	background: linear-gradient(45deg, rgba(3,96,237,1) 0%, rgba(255,93,177,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0360ed', endColorstr='#ff5db1', GradientType=1 );
+}
+
+body{
+	font-family: $font-primary;
+	font-size: 16px;
+	line-height: 1.8;
+	font-weight: normal;
+	// background: #f2d6eb;
+	color: lighten($black,50%);
+	position: relative;
+	z-index: 0;
+	&:after{
+		z-index: -1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		content: '';
+		@include gradient-background();
+		opacity: .4;
+	}
+}
+a {
+	transition: .3s all ease;
+	color: $primary;
+	&:hover, &:focus {
+		text-decoration: none !important;
+		outline: none !important;
+		box-shadow: none;
+	}
+}
+h1, h2, h3, h4, h5,
+.h1, .h2, .h3, .h4, .h5 {
+	line-height: 1.5;
+	font-weight: 400;
+	font-family: $font-primary;
+	color: $black;
+}
+
+.bg-primary{
+	background: $primary !important;
+}
+
+.ftco-section{
+	padding: 7em 0;
+}
+
+.ftco-no-pt{
+	padding-top: 0;
+}
+.ftco-no-pb{
+	padding-bottom: 0;
+}
+//HEADING SECTION
+.heading-section{
+	font-size: 28px;
+	color: $white;
+}
+
+//COVER BG
+.img{
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.login-wrap{
+	position: relative;
+	z-index: 0;
+	color: rgba(255,255,255,.7);
+	border: 1px solid rgba(255,255,255,.2);
+	padding: 40px;
+	border-radius: 4px;
+	h3{
+		font-weight: 300;
+		color: $white;
+		font-size: 22px;
+	}
+}
+
+.form-group{
+	position: relative;
+	label{
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 12px;
+		letter-spacing: 1px;
+		color: $white;
+	}
+	.icon{
+		position: absolute;
+		top: 50%;
+		left: 15px;
+		margin-top: 10px;
+		color: $white;
+	}
+}
+
+.field-icon {
+	position: absolute;
+	top: 50%;
+	right: 15px;
+	transform: translateY(-50%);
+	color: rgba(255,255,255,.5);
+	margin-top: 15px;
+}
+
+//FORM CONTROL
+.form-control {
+	height: 52px;
+	color: $white !important;
+	font-size: 16px;
+	border-radius: 40px;
+	box-shadow: none;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,.3);
+	padding-left: 40px;
+	padding-right: 20px;
+	&::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	  color: rgba(255,255,255,.5) !important;
+	}
+	&::-moz-placeholder { /* Firefox 19+ */
+	  color: rgba(255,255,255,.5) !important;
+	}
+	&:-ms-input-placeholder { /* IE 10+ */
+	  color: rgba(255,255,255,.5) !important;
+	}
+	&:-moz-placeholder { /* Firefox 18- */
+	  color: rgba(255,255,255,.5) !important;
+	}
+	&:focus, &:active {
+		outline: none !important;
+		box-shadow: none;
+		border: 1px solid rgba(255,255,255,.2);
+		background: rgba(255,255,255,.04);
+	}
+}
+textarea.form-control {
+	height: inherit!important;
+}
+
+
+
+
+//BUTTON
+.btn {
+	cursor: pointer;
+	border-radius: 40px;
+	box-shadow: none!important;
+	font-size: 15px;
+	&:hover, &:active, &:focus {
+		outline: none;
+	}
+	&.btn-primary {
+		background: $primary !important;
+		border: 1px solid $primary !important;
+		color: $white !important;
+		&:hover {
+			border: 1px solid $primary;
+			background: transparent;
+			color :$primary;
+		}
+		&.btn-outline-primary {
+			border: 1px solid $primary;
+			background: transparent;
+			color :$primary;
+			&:hover {
+				border: 1px solid transparent;
+				background: $primary;
+				color :$white;
+			}
+		}
+	}
+}
+

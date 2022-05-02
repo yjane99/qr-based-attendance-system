@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Scanner - Attendance Guru</title>
+  </head>
+  <body>
+    <!-- QR code scanner -->
+    <div style="width: 500px" id="reader"></div>
+    <div id="scan_data"></div>
+
+    <script src="../static/html5-qrcode.min.js"></script>
+    <script>
+      function onScanSuccess(decodedText, decodedResult) {
+        // Handle on success condition with the decoded text or result.
+        console.log(`Scan result: ${decodedText}`, decodedResult);
+        var xhr = new XMLHttpRequest();
+        var url = "/update-file/";
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+          if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            // if print 0 meaning that it was successfull
+            if (data["success"] === "1") {
+              let menu = document.getElementById("scan_data");
+              let h2 = `<h1>Your Attendance has been marked</h1>
+                <h3>Roll Number: ${data["data"][1]}</h3>
+                            <hr/>
+                            <h3> Name: ${data["data"][2]}</h3>
+                            <hr/>
+                            <h3> Year: ${data["data"][6]}</h3>
+                            <hr/>
+                            <h3> Branch: ${data["data"][7]}</h3>`;
+              // add it to the ul element
+              menu.innerHTML = h2;
+            } else if (data["success"] === "error") {
+              document.getElementById("scan_data").innerHTML =
+                "Invalid QR Code.";
+            } else {
+              document.getElementById("scan_data").innerHTML =
+                "Time Limit has Expired.";
+            }
+          }
+        };
+        xhr.send(JSON.stringify({ decodedText: decodedText }));
+      }
+
+      var html5QrcodeScanner = new Html5QrcodeScanner("reader", {
+        fps: 10,
+        qrbox: 250,
+      });
+      var key = html5QrcodeScanner.render(onScanSuccess);
+    </script>
+  </body>
+</html>

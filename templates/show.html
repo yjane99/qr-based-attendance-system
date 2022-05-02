@@ -1,0 +1,64 @@
+<!--Store this code in 'display.html' file inside the 'templates' folder-->
+
+<html lang="en">
+	<head>
+		<title>display</title>
+		<link rel="stylesheet" href="../static/style.css">
+	</head>
+	<body bgcolor="#e6ffee">
+		<div class="one">
+			<div class="two">
+				
+				<ul>
+					
+					<li><a href="{{url_for('logout')}}">Log out</a></li>
+				</ul>
+			</div>
+			<div class="content" align="center">
+				<div class="topbar">
+										
+				</div> </br>
+				<div class="contentbar">
+					<h1>Your Details</h1> </br>
+					{% block content %}
+						<div class="border">
+							<table class="worddark"></br></br></br></br>
+								<tr>
+									<td>Student Id:</td>
+									<td>{{ account['Sid'] }}</td>
+								</tr>
+								<tr>
+									<td>branch:</td>
+									<td>{{ account['branch'] }}</td>
+								</tr>
+								<tr>
+									<td>Section:</td>
+									<td>{{ account['Sec'] }}</td>
+								</tr>
+								<tr>
+									<td>Year:</td>
+									<td>{{ account['Year'] }}</td>
+								</tr>
+								<tr>
+									<td>Period:</td>
+									<td>{{ account['Period'] }}</td>
+								</tr>
+								<tr>
+									<td>Time:</td>
+									<td>{{ account['Time'] }}</td>
+								</tr>
+								<tr>
+									<td>Date:</td>
+									<td>{{ account['Date'] }}</td>
+								</tr>
+								
+                                
+							</table>
+						</div>
+					{% endblock %}										
+				</div>
+				
+			</div>
+		</div>
+	</body>
+</html>

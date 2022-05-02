@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sign Up</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="{{url_for('static',filename = 'css5/style.css')}}">
+
+	</head>
+	<body class="img" style="background-image: url({{url_for('static',filename = 'images5/bg.jpg')}});">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Sign Up</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-5">
+					<div class="login-wrap">
+		      	<h3 class="text-center mb-4">Create Your Account</h3>
+		      	<main>
+                                {% with messages=get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                {% for category,message in messages %}
+                                {% if category== 'success' %}
+                                <div class="alert alert-success mb-3" role="alert">{{message}}</div>
+                                {% endif %}
+                                {% if category== 'error' %}
+                                <div class="alert alert-danger mb-3" role="alert">{{message}}</div>
+                                {% endif %}
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+                            </main>
+						 <form method="POST" class="register-form" id="register-form" action="/pregister.html">
+		      		<div class="form-group mb-3">
+		      			<label class="label" for="name">Name</label>
+		      			<input type="text" class="form-control" name = "name" id ="name" placeholder="Name" required="">
+		      			<span class="icon fa fa-user-o"></span>
+		      		</div>
+                    <div class="form-group mb-3">
+                        <label class="label" for="name">Username</label>
+                        <input type="text" class="form-control" name = "uname" id ="uname"  placeholder="Username" required="">
+                        <span class="icon fa fa-user-o"></span>
+                    </div>
+                     <div class="form-group mb-3">
+                        <label class="label" for="phone">Mobile Number</label>
+                        <input type="phone" class="form-control" name="mobile" id="mobile" placeholder="Mobile Number">
+                        <span class="icon fa fa-phone"></span>
+                    </div>
+		      		<div class="form-group mb-3">
+		      			<label class="label" for="email">Email Address</label>
+		      			<input type="email" class="form-control" name= "email" id= "email" placeholder="Email" required="">
+		      			<span class="icon fa fa-paper-plane-o"></span>
+		      		</div>
+	            <div class="form-group mb-3">
+	            	<label class="label" for="password">Password</label>
+	              <input id="password" type="password" class="form-control" name="password" id="password" placeholder="Password" required="">
+	              <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	              <span class="icon fa fa-lock"></span>
+	            </div>
+	            <div class="form-group mb-3">
+	            	<label class="label" for="password"> Confirm Password</label>
+	              <input id="password-confirm" type="password" class="form-control" name="cpassword" id="cpassword" placeholder="Confirm Password" required="">
+	              <span toggle="#password-confirm" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	              <span class="icon fa fa-lock"></span>
+	            </div>
+	            <div class="form-group">
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+	            </div>
+	          </form>
+	         <a href="/plogin.html" class="signup-image-link">I am already member</a><br>
+	          <a href="/" class="signup-image-link">Go Back</a>
+	        </div>
+
+	        </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="{{url_for('static',filename = 'js5/jquery.min.js')}}"></script>
+  <script src="{{url_for('static',filename = 'js5/popper.js')}}"></script>
+  <script src="{{url_for('static',filename = 'js5/bootstrap.min.js')}}"></script>
+  <script src="{{url_for('static',filename = 'js5/main.js')}}"></script>
+
+	</body>
+</html>
+

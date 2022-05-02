@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>generate Q-R Code</title>
+  </head>
+  <body>
+    <form
+      method="POST"
+      class="register-form"
+      id="register-form"
+      action="/generate.html"
+    >
+      <div class="form-holder">
+        <span class="">year</span>
+        <select
+          id="year"
+          name="year"
+          placeholder="Year"
+          style="margin-left: 50px"
+        >
+          <option value="none" selected disabled hidden>
+            Select your Academic Year
+          </option>
+          <option value="FE">FE</option>
+          <option value="SE">SE</option>
+          <option value="TE">TE</option>
+          <option value="BE">BE</option>
+        </select>
+      </div>
+	  <br/>
+      <div class="form-holder">
+        <span class="">Branch</span>
+        <select
+          id="branch"
+          name="branch"
+          placeholder="Branch"
+          style="margin-left: 50px"
+        >
+          <option value="none" selected disabled hidden>
+            Select your Academic Branch
+          </option>
+          <option value="comp">Computer Engineering</option>
+          <option value="it">Information Technology</option>
+          <option value="entc">Electronics and Telecommunication</option>
+        </select>
+      </div>
+	  <br/>
+	  <div class="form-holder">
+        <span class="">Subject</span>
+        <select
+          id="subject"
+          name="subject"
+          placeholder="Branch"
+          style="margin-left: 50px"
+        >
+          <option value="none" selected disabled hidden>
+            Select the Subject
+          </option>
+		  {% for sub in sub_list %}
+          <option value={{sub}}>{{sub}}</option>
+		  {% endfor %}
+          
+        </select>
+      </div>
+	  
+	  <br/>
+
+      <button>
+        <span>Generate QR Codes</span>
+      </button>
+
+      <a href="/" class="signup-image-link">Cancel</a>
+    </form>
+
+    <script>
+      function myFunction() {
+        alert("Q-R Code generated Successfully!!!!");
+      }
+    </script>
+  </body>
+</html>

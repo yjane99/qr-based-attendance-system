@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Registration Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- LINEARICONS -->
+    <link rel="stylesheet" href="{{url_for('static',filename = 'fonts2/linearicons/style.css')}}">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css2/style.css')}}">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="inner">
+            <img src="{{url_for('static',filename = 'images2/image-1.png')}}" alt="" class="image-1">
+
+            <main>
+                {% with messages=get_flashed_messages(with_categories=true) %} {% if messages %} {% for category,message in messages %} {% if category== 'success' %}
+                <div class="alert alert-success mb-3" role="alert">{{message}}</div>
+                {% endif %} {% if category== 'error' %}
+                <div class="alert alert-danger mb-3" role="alert">{{message}}</div>
+                {% endif %} {% endfor %} {% endif %} {% endwith %}
+            </main>
+            <form method="POST" class="register-form" id="register-form" action="/sregister.html">
+                <h3>New Account?</h3>
+                <div class="form-holder">
+                    <span class="lnr lnr-user"></span>
+                    <input type="text" class="form-control" placeholder="Student Id" name="sid" id="sid" required="">
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-user"></span>
+                    <input type="text" class="form-control" placeholder="Name" name="name" id="name" required="">
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-user"></span>
+                    <input type="text" class="form-control" placeholder="Username" name="uname" id="uname" required="">
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-phone-handset"></span>
+                    <input type="phone" class="form-control" placeholder="Phone Number" name="mobile" id="mobile" required="">
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-envelope"></span>
+                    <input type="email" class="form-control" placeholder="Mail" name="email" id="email" required="">
+                </div>
+                <div class="form-holder">
+                    <span class="">year</span>
+                    <select id="year" name="year" placeholder="Year" style="margin-left: 50px;">
+                        <option value="none" selected disabled hidden>Select your Academic Year</option>
+                        <option value="FE">FE</option>
+                        <option value="SE">SE</option>
+                        <option value="TE">TE</option>
+                        <option value="BE">BE</option>
+                    </select>
+                </div>
+                <div class="form-holder">
+                    <span class="">Branch</span>
+                    <select id="branch" name="branch" placeholder="Branch" style="margin-left: 50px;">
+                        <option value="none" selected disabled hidden>Select your Academic Branch</option>
+                        <option value="comp">Computer Engineering</option>
+                        <option value="it">Information Technology</option>
+                        <option value="entc">Electronics and Telecommunication</option>
+                    </select>
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-lock"></span>
+                    <input type="password" class="form-control" placeholder="Password" name="password" id="password" required="">
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-lock"></span>
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="cpassword" id="cpassword" required="">
+                </div>
+                <button>
+						<span>Register</span>
+					</button>
+                <a href="/slogin.html" class="signup-image-link">I am already member</a><br>
+                <a href="/" class="signup-image-link">Cancel</a>
+            </form>
+            <img src="{{url_for('static',filename = 'images2/image-2.png')}}" alt="" class="image-2">
+        </div>
+
+    </div>
+
+    <script src="{{url_for('static',filename = 'js2/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{url_for('static',filename = 'js2/main.js')}}"></script>
+</body>
+
+</html>

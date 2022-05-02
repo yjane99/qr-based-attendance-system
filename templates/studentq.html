@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h1>Student Queries</h1>
+   
+       
+   
+<table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Student Name</th>
+        <th>Email Id</th>
+        <th>Subject</th>
+        <th>Message</th>
+        
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for contact in con %}    
+
+      <tr>
+        <td>{{contact.id}}</td>
+        <td>{{contact.name}}</td>
+        <td>{{contact.email}}</td>
+        <td>{{contact.subject}}</td>
+        <td>{{contact.message}}</td>
+        
+        
+        
+        
+      </tr>
+      
+       
+
+       {% endfor %}
+   </tbody>
+</table>
+
+        <!-- Pager -->
+       
+      </div>
+    </div>
+  </div>
+  </body>
+</html>
