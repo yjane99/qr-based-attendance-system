@@ -4,3 +4,4 @@ virtual
 *.txt
 *.csv
 *.png
+.env
