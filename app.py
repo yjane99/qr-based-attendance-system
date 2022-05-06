@@ -28,8 +28,10 @@ from flask_mysqldb import MySQL
 
 import MySQLdb.cursors
 import re
+from dotenv import load_dotenv
 
-
+# loading environment variables
+load_dotenv()
 
 labels = [
     'Java','Pyhton','C','C++','m1','m2'
@@ -55,14 +57,13 @@ app = Flask(__name__,template_folder='templates')
 app.secret_key = 'super-secret-key'
 
 
-
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = False
 app.config['TESTING'] = False
-app.config['MAIL_USERNAME'] = 'attendancemanagerbot@gmail.com'
-app.config['MAIL_PASSWORD'] = 'pgpoevuswfxouogr'
+app.config['MAIL_USERNAME'] = os.getenv('SMTP_MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('SMTP_MAIL_PASSWORD')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
