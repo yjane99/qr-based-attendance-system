@@ -155,7 +155,7 @@ def send_mail(email_f):
     file_name=email_f['file']
     try:
         subject="Attendance QR Code for lecture"
-        msg = Message(subject, sender = "interviewbot4546@gmail.com", recipients = [email])
+        msg = Message(subject, sender = os.getenv('SMTP_MAIL_USERNAME'), recipients = [email])
         msg.body = '''Dear Student, Your QR code for the lecture is attached herewith, this QR code is valid only for 35 minutes.'''
         with app.open_resource(os.getcwd() + "\\" + file_name) as fp:  
             msg.attach(file_name,"image/png",fp.read())  
@@ -523,12 +523,43 @@ def line():
     return render_template('line_chart.html', title='Attendence System', max=30 , labels=line_labels, values=line_values)
    
 
-@app.route("/view")
+@app.route("/view.html" ,methods=['GET','POST'])
 def View():
-    registers = Attend.query.all()
-    print(registers)
-    return render_template('view.html', params=params, regi=registers)
-    return render_template('dashboard.html', params=params)
+    email=session['email']
+    conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+    mycursor = conn.cursor()
+    sql = 'SELECT subject FROM register WHERE email= %s'
+    tuple=(email,)
+    mycursor.execute(sql,tuple)
+    sub_result = mycursor.fetchall()
+    conn.close()
+    teacher_sub=(sub_result[0][0])
+    sub_list=decode_binary(teacher_sub)
+    result=[]
+    if request.method=='POST':
+
+        year=request.form.get('year')
+        branch=request.form.get('branch')
+        subject=request.form.get('subject')
+        from_date = str(request.form.get('from-date'))
+        to_date = str(request.form.get('to-date'))
+        print(from_date)
+        conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+        mycursor = conn.cursor()
+        #myobj = datetime.now()
+        #lecture_date = str(myobj.date())
+        sql = 'SELECT * FROM attend WHERE year= %s AND branch= %s AND Subject= %s AND Date BETWEEN %s AND %s'
+        tuple=(year,branch,subject,from_date,to_date)
+        mycursor.execute(sql,tuple)
+        result = mycursor.fetchall()
+        conn.close()
+        print(result)
+        
+        return render_template('view.html', params=params, regi=result,sub_list=sub_list)
+
+
+    return render_template('view.html', params=params, regi=result,sub_list=sub_list)
+
 
 
 @app.route("/studentq")

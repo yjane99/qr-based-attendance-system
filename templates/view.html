@@ -7,46 +7,115 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <h1>Student Attendence</h1>
+                <form method="POST" class="register-form" id="register-form" action="/view.html">
+                    <div class="form-holder">
+                        <span class="">year</span>
+                        <select id="year" name="year" placeholder="Year" style="margin-left: 50px">
+                            <option value="none" selected disabled hidden>
+                                Select your Academic Year
+                            </option>
+                            <option value="FE">FE</option>
+                            <option value="SE">SE</option>
+                            <option value="TE">TE</option>
+                            <option value="BE">BE</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="form-holder">
+                        <span class="">Branch</span>
+                        <select id="branch" name="branch" placeholder="Branch" style="margin-left: 50px">
+                            <option value="none" selected disabled hidden>
+                                Select your Academic Branch
+                            </option>
+                            <option value="comp">Computer Engineering</option>
+                            <option value="it">Information Technology</option>
+                            <option value="entc">Electronics and Telecommunication</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="form-holder">
+                        <span class="">Subject</span>
+                        <select id="subject" name="subject" placeholder="Branch" style="margin-left: 50px">
+                            <option value="none" selected disabled hidden>
+                                Select the Subject
+                            </option>
+                            {% for sub in sub_list %}
+                            <option value={{sub}}>{{sub}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    <br />
+                    <div class="form-holder">
+                        <span class="">From Date</span>
+                    <input type="date" id="from-date" name="from-date">
+                    </div>
+
+                    <br />
+                    <div class="form-holder">
+                        <span class="">To Date</span>
+                    <input type="date" id="to-date" name="to-date">
+                    </div>
+
+                    <br />
+
+                    <button>
+                        <span>View Attendance</span>
+                    </button>
+
+                    <a href="/" class="signup-image-link">Cancel</a>
+                </form>
+
+                <br />
 
 
 
+
+                {% if regi|length ==0 %}
+                <p> Select Year, Branch and Subject to view Attendance</p>
+                {% else %}
                 <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Sid</th>
-                            <th>Branch</th>
-                            <th>Section</th>
-                            <th>Year</th>
-                            <th>Period</th>
-                            <th>Time</th>
-                            <th>Date</th>
 
-                        </tr>
-                    </thead>
                     <tbody>
-                        {% for register in regi %}
+                        
+                        <thead>
+                            <tr>
+                                <th>Sr. NO.</th>
+                                <th>IRN</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Date</th>
+
+
+                            </tr>
+                        </thead>
+                        {% for data in range(0,regi|length) %}
 
                         <tr>
-                            <td>{{register.id}}</td>
-                            <td>{{register.Sid}}</td>
-                            <td>{{register.branch}}</td>
-                            <td>{{register.Sec}}</td>
-                            <td>{{register.Year}}</td>
-                            <td>{{register.Period}}</td>
-                            <td>{{register.Time}}</td>
-                            <td>{{register.Date}}</td>
+                            <td>{{data+1}}</td>
+                            <td>{{regi[data][1]}}</td>
+                            <td>{{regi[data][2]}}</td>
+                            <td>{{regi[data][8]}}</td>
+                            <td>{{regi[data][10]}}</td>
+
 
 
 
                         </tr>
+
 
 
 
                         {% endfor %}
+                        
+                        
+
                     </tbody>
 
                 </table>
+                <p>Total Count : {{regi|length}}</p><br>
+                {% endif %}
 
                 <!-- Pager -->
 
@@ -54,12 +123,8 @@
         </div>
     </div>
 
-    <p>Total Count : {{myresult}}</p><br>
-    <th>
-        <b>Student Id wise total count of attended lectures:<br></b></th>
-    <td>
-        {{result}}
-    </td>
+
+
 
 
 
