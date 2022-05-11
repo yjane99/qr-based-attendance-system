@@ -1,99 +1,133 @@
 <!DOCTYPE html>
 <html>
-    <title>display</title>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <h1>Student Today's Attendance</h1>
-                    <form method="POST" class="register-form" id="register-form" action="/display.html">
-                        <div class="form-holder">
-                            <span class="">year</span>
-                            <select id="year" name="year" placeholder="Year" style="margin-left: 50px">
-                                <option value="none" selected disabled hidden>
-                                    Select your Academic Year
-                                </option>
-                                <option value="FE">FE</option>
-                                <option value="SE">SE</option>
-                                <option value="TE">TE</option>
-                                <option value="BE">BE</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div class="form-holder">
-                            <span class="">Branch</span>
-                            <select id="branch" name="branch" placeholder="Branch" style="margin-left: 50px">
-                                <option value="none" selected disabled hidden>
-                                    Select your Academic Branch
-                                </option>
-                                <option value="comp">Computer Engineering</option>
-                                <option value="it">Information Technology</option>
-                                <option value="entc">Electronics and Telecommunication</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div class="form-holder">
-                            <span class="">Subject</span>
-                            <select id="subject" name="subject" placeholder="Branch" style="margin-left: 50px">
-                                <option value="none" selected disabled hidden>
-                                    Select the Subject
-                                </option>
-                                {% for sub in sub_list %}
-                                <option value={{sub}}>{{sub}}</option>
-                                {% endfor %}
-    
-                            </select>
-                        </div>
-    
-                        <br />
-    
-                        <button>
-                            <span>View Attendance</span>
-                        </button>
-    
-                        <a href="/" class="signup-image-link">Cancel</a>
-                    </form>
-    
+<title>display</title>
+
+<head>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <h1>Student Today's Attendance</h1>
+                <form method="POST" class="register-form" id="register-form" action="/display.html">
+                    <div class="form-holder">
+                        <span class="">year</span>
+                        <select id="year" name="year" placeholder="Year" style="margin-left: 50px">
+                            <option value="none" selected disabled hidden>
+                                Select your Academic Year
+                            </option>
+                            <option value="FE">FE</option>
+                            <option value="SE">SE</option>
+                            <option value="TE">TE</option>
+                            <option value="BE">BE</option>
+                        </select>
+                    </div>
                     <br />
-    
-                    {% if regi|length ==0 %}
-                    <p> Select Year, Branch and Subject to view Attendance</p>
-                    {% else %}
-                    <table class="table">
-    
-                        <tbody>
-                            
-                            <thead>
-                                <tr>
-                                    <th>Sr. NO.</th>
-                                    <th>IRN</th>
-                                    <th>Name</th>
-                                    <th>Status</th>
-    
-                                </tr>
-                            </thead>
-                            {% for data in range(0,regi|length) %}
-    
+                    <div class="form-holder">
+                        <span class="">Branch</span>
+                        <select id="branch" name="branch" placeholder="Branch" style="margin-left: 50px">
+                            <option value="none" selected disabled hidden>
+                                Select your Academic Branch
+                            </option>
+                            <option value="comp">Computer Engineering</option>
+                            <option value="it">Information Technology</option>
+                            <option value="entc">Electronics and Telecommunication</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="form-holder">
+                        <span class="">Subject</span>
+                        <select id="subject" name="subject" placeholder="Branch" style="margin-left: 50px">
+                            <option value="none" selected disabled hidden>
+                                Select the Subject
+                            </option>
+                            {% for sub in sub_list %}
+                            <option value={{sub}}>{{sub}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    <br />
+
+                    <button onclick="storeRecord()">
+                        <span>View Attendance</span>
+                    </button>
+
+                    <a href="/" class="signup-image-link">Cancel</a>
+                </form>
+
+                <br />
+
+                {% if regi|length ==0 %}
+                <p> Select Year, Branch and Subject to view Attendance</p>
+                {% else %}
+                <table class="table" id="studtable">
+
+                    <tbody>
+
+                        <thead>
                             <tr>
-                                <td>{{data+1}}</td>
-                                <td>{{regi[data][1]}}</td>
-                                <td>{{regi[data][2]}}</td>
-                                <td>{{regi[data][8]}}</td>
+                                <th>Sr. NO.</th>
+                                <th>IRN</th>
+                                <th>Name</th>
+                                <th>Status</th>
 
                             </tr>
-                            {% endfor %}
-                        </tbody>
-    
-                    </table>
-                    <p>Total Count : {{regi|length}}</p><br>
-                    {% endif %}
-    
-                    <!-- Pager -->
-    
-                </div>
+                        </thead>
+                        {% for data in range(0,regi|length) %}
+
+                        <tr>
+                            <td>{{data+1}}</td>
+                            <td>{{regi[data][1]}}</td>
+                            <td>{{regi[data][2]}}</td>
+                            <td>{{regi[data][8]}}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+                <button onclick="ExportToExcel('xlsx')">Export table to excel</button>
+                <br />
+                <p>Total Present : {{total_present}}</p><br>
+                {% endif %}
+
+                <!-- Pager -->
+
             </div>
         </div>
-    
+    </div>
+    <script>
+        
+        function storeRecord(e) {
             
-    </body>
+            var year = document.getElementById('year').value;
+            var branch = document.getElementById('branch').value;
+            var sub = document.getElementById('subject').value;
+            localStorage.setItem("year", year);
+            localStorage.setItem("branch", branch);
+            localStorage.setItem("sub", sub);
+        }
+        function ExportToExcel(type, fn, dl) {
+            var elt = document.getElementById('studtable');
+            var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            var year = localStorage.getItem("year");
+            var branch = localStorage.getItem("branch");
+            var sub = localStorage.getItem("sub");
+            var fileName = date.toString() +"_"+ year.toUpperCase() +"_"+ branch.toUpperCase() +"_" +sub.toUpperCase() + ".";
+            return dl ?
+                XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+                XLSX.writeFile(wb, fn || (fileName + (type || 'xlsx')));
+        }
+    </script>
+
+
+</body>
+
 </html>

@@ -1,4 +1,5 @@
-from pickle import NONE
+#from crypt import methods
+#from pickle import NONE
 from flask import Flask, render_template, request,session,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail,Message
@@ -579,12 +580,8 @@ def View():
                         else:
                             j['total'] = j['total'] + 1
 
-        
         print(res_list)
-
-                    
-
-        
+                
         return render_template('view.html', params=params, regi=result,sub_list=sub_list ,total_attend = res_list,total_present = result_status[0][0])
 
 
@@ -622,11 +619,44 @@ def Count():
     conn.close()
     return result
 
-@app.route('/display')
+@app.route('/display.html',methods=["POST","GET"])
 def index():
-    myresult = Display()
-    result = Count()
-    return render_template('display.html',myresult=myresult,result=result)
+    email=session['email']
+    conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+    mycursor = conn.cursor()
+    sql = 'SELECT subject FROM register WHERE email= %s'
+    tuple=(email,)
+    mycursor.execute(sql,tuple)
+    sub_result = mycursor.fetchall()
+    conn.close()
+    teacher_sub=(sub_result[0][0])
+    sub_list=decode_binary(teacher_sub)
+    result=[]
+    if request.method=='POST':
+
+        year=request.form.get('year')
+        branch=request.form.get('branch')
+        subject=request.form.get('subject')
+        conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+        mycursor = conn.cursor()
+        myobj = datetime.now()
+        lecture_date = str(myobj.date())
+        sql = 'SELECT * FROM attend WHERE year= %s AND branch= %s AND Subject= %s AND Date= %s'
+        tuple=(year,branch,subject,lecture_date)
+        mycursor.execute(sql,tuple)
+        result = mycursor.fetchall()
+        sql_status = 'SELECT COUNT(*) FROM attend WHERE Status = %s AND year= %s AND branch= %s AND Subject= %s AND Date= %s'
+        tuple_status=('P',year,branch,subject,lecture_date)
+        mycursor.execute(sql_status,tuple_status)
+        result_status = mycursor.fetchall()
+        conn.close()
+
+        print(result_status[0][0])
+        
+        return render_template('display.html', params=params, regi=result,sub_list=sub_list ,total_present = result_status[0][0])
+
+
+    return render_template('display.html', params=params, regi=result,sub_list=sub_list)
    
     
 
