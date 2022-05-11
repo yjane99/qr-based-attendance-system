@@ -49,13 +49,13 @@
                     <br />
                     <div class="form-holder">
                         <span class="">From Date</span>
-                    <input type="date" id="from-date" name="from-date">
+                        <input type="date" id="from-date" name="from-date">
                     </div>
 
                     <br />
                     <div class="form-holder">
                         <span class="">To Date</span>
-                    <input type="date" id="to-date" name="to-date">
+                        <input type="date" id="to-date" name="to-date">
                     </div>
 
                     <br />
@@ -78,7 +78,7 @@
                 <table class="table">
 
                     <tbody>
-                        
+
                         <thead>
                             <tr>
                                 <th>Sr. NO.</th>
@@ -108,13 +108,44 @@
 
 
                         {% endfor %}
-                        
-                        
+
+
 
                     </tbody>
 
                 </table>
-                <p>Total Count : {{regi|length}}</p><br>
+                
+                <br />
+                <table class="table">
+
+                    <tbody>
+
+                        <thead>
+                            <tr>
+                                <th>Sr. NO.</th>
+                                <th>IRN</th>
+                                <th>Name</th>
+                                <th>Total Attendance </th>
+
+
+
+                            </tr>
+                        </thead>
+                        {% for data in range(0,total_attend|length) %}
+
+                        <tr>
+                            <td>{{data+1}}</td>
+                            <td>{{total_attend[data]['sid']}}</td>
+                            <td>{{total_attend[data]['name']}}</td>
+                            <td>{{total_attend[data]['attend']}} / {{total_attend[data]['total']}}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
                 {% endif %}
 
                 <!-- Pager -->

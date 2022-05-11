@@ -552,10 +552,40 @@ def View():
         tuple=(year,branch,subject,from_date,to_date)
         mycursor.execute(sql,tuple)
         result = mycursor.fetchall()
+        sql_status = 'SELECT COUNT(*) FROM attend WHERE Status = %s AND year= %s AND branch= %s AND Subject= %s AND Date BETWEEN %s AND %s'
+        tuple_status=('P',year,branch,subject,from_date,to_date)
+        mycursor.execute(sql_status,tuple_status)
+        result_status = mycursor.fetchall()
         conn.close()
-        print(result)
+
+        print(result_status[0][0])
+        sid_list=[]
+        res_list=[]
+        for i in result:
+            if i[1] not in sid_list:
+                sid_list.append(i[1])
+                if i[8]=='P':
+
+                    obj={'sid':i[1],'name':i[2],'attend':1,'total':1}
+                else:
+                    obj={'sid':i[1],'name':i[2],'attend':0,'total':1}
+                res_list.append(obj)
+            else:
+                for j in res_list:
+                    if j['sid']==i[1]:
+                        if i[8]=='P':
+                            j['attend'] = j['attend'] + 1
+                            j['total'] = j['total'] + 1
+                        else:
+                            j['total'] = j['total'] + 1
+
         
-        return render_template('view.html', params=params, regi=result,sub_list=sub_list)
+        print(res_list)
+
+                    
+
+        
+        return render_template('view.html', params=params, regi=result,sub_list=sub_list ,total_attend = res_list,total_present = result_status[0][0])
 
 
     return render_template('view.html', params=params, regi=result,sub_list=sub_list)
