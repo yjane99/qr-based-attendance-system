@@ -1,205 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Student Dashboard</title>
-    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/vendors/mdi/css/materialdesignicons.min.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/vendors/flag-icon-css/css/flag-icon.min.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/vendors/css/vendor.bundle.base.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/vendors/font-awesome/css/font-awesome.min.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/css/style.css')}}" />
+
+    <head>
+        <meta charset="utf-8">
+        <title>Update Profile Form</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-  </head>
-  <body>
-    <div class="container-scroller">
+        <!-- LINEARICONS -->
+        <link rel="stylesheet" href="{{url_for('static',filename = 'fonts2/linearicons/style.css')}}">
+    
+        <!-- STYLE CSS -->
+        <link rel="stylesheet" href="{{url_for('static',filename = 'css2/style.css')}}">
+    </head>
 
-      {% with messages = get_flashed_messages() %}  
-         {% if messages %}  
-               {% for message in messages %}  
-               <div class="alert alert-danger" role="alert">
-                <center>{{message}}</center>
-               </div>
-               {% endfor %}  
-         {% endif %}  
-      {% endwith %} 
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-        </div>
-        <ul class="nav">
-          <li class="nav-item nav-profile">
-            <a href="#" class="nav-link">
-              <div class="nav-profile-image">
-              
-                <span class="login-status online"></span>
-                <!--change to offline or busy as needed-->
-              </div>
-              <a href="#" class="nav-link">
-              <div class="nav-profile-image">
-                <img src="{{url_for('static',filename = 'assets/images/faces/face1.png')}}" alt="profile" />
-                <br><br>
-                 <span class="font-weight-medium mb-2">{% if email %}
-                  {{email}}
-              {% endif %}</span>
-                <span class="login-status online"></span>
-                <!--change to offline or busy as needed-->
-              </div>
-              <div class="nav-profile-text d-flex flex-column pr-3">
-               
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/scan.html">
-              <i class="mdi mdi-contacts menu-icon"></i>
-              <span class="menu-title">Scan Q-R</span>
-            </a>
-          </li>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="mdi mdi-contacts menu-icon"></i>
-              <span class="menu-title">Ask question</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/update">
-              <i class="mdi mdi-chart-bar menu-icon"></i>
-              <span class="menu-title">Check total attendence</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/">
-              <i class="mdi mdi-home menu-icon"></i>
-              <span class="menu-title">Back</span>
-            </a>
-          </li>
-          <li class="nav-item sidebar-actions">
-            <div class="nav-link">
-              <div class="mt-4">
-                <div class="border-none">
-                  
-                </div>
-                <ul class="mt-4 pl-0">
-                
-                </ul>
-              </div>
+<body>
+    <div class="wrapper">
+        <div class="inner">
+        <form method="POST" class="register-form" id="register-form" action="/Update.html">
+            <h3>Update your student profile.</h3>
+            <div class="form-holder">
+                <span class="">SID : {{stud_data[1]}}</span>
+                <br>
             </div>
-          </li>
-        </ul>
-      </nav>
-      <div class="container-fluid page-body-wrapper">
-        <div id="theme-settings" class="settings-panel">
-          <i class="settings-close mdi mdi-close"></i>
-          <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options selected" id="sidebar-default-theme">
-            <div class="img-ss rounded-circle bg-light border mr-3"></div> Default
-          </div>
-          <div class="sidebar-bg-options" id="sidebar-dark-theme">
-            <div class="img-ss rounded-circle bg-dark border mr-3"></div> Dark
-          </div>
-          <p class="settings-heading mt-2">HEADER SKINS</p>
-          <div class="color-tiles mx-0 px-4">
-            <div class="tiles light"></div>
-            <div class="tiles dark"></div>
-          </div>
-        </div>
-        <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
-          <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
-            <button class="navbar-toggler navbar-toggler align-self-center mr-2" type="button" data-toggle="minimize">
-              <i class="mdi mdi-menu"></i>
-            </button>
-            
-
-                    <div class="preview-item-content">
-                    </div>
-                  </a>
-              </li>
-              <li class="nav-item nav-search border-0 ml-1 ml-md-3 ml-lg-5 d-none d-md-flex">
-                <form class="nav-link form-inline mt-2 mt-md-0">
-                  <div class="input-group">
-                    <div class="input-group-append">
-                      
-                    </div>
-                  </div>
-                </form>
-              </li>
-            </ul>
-            <ul class="navbar-nav navbar-nav-right ml-lg-auto">
-              <li class="nav-item nav-profile dropdown border-0">
-                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                  <img class="nav-profile-img mr-2" alt="" src="{{url_for('static',filename = 'assets/images/faces/face1.png')}}" />
-                  <span class="profile-name">{% for i in info %}
-                {{i.name}}
-              {% endfor %}</span>
-                </a>
-                <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
-                    <i class="mdi mdi-logout mr-2 text-primary"><a href="/logout"></i> Signout </a>
-                </div>
-              </li>
-            </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-              <span class="mdi mdi-menu"></span>
-            </button>
-          </div>
-        </nav>
-        <div class="main-panel">
-          <div class="content-wrapper pb-0">
-            <div class="page-header flex-wrap">
-              <h3 class="mb-0">welcome {% for i in info %}
-                {{i.name}}
-              {% endfor %}!!!!<span class="pl-0 h6 pl-sm-2 text-muted d-inline-block">
-                </span>
-              </h3>
-              <div class="d-flex">
-              </div>
+            <div class="form-holder">
+                <span class="">NAME : {{stud_data[2]}}</span>
+                <br>
             </div>
-                   <form>
-                   <label for="label"><b>Teacher took 15 lecture this month:</b></label><br><br>
- 
-  <br><br>          
-</form>
+            <div class="form-holder">
+                <span class="">Branch : {{stud_data[7]}}</span>
+                <br>
             </div>
-          </div>
-        </div>
-      </div>
-
-              </div>
-         
-                      
-                           
-            
-                <!--browser stats ends-->
-              </div>
+            <div class="form-holder">
+                <span class="lnr lnr-user"></span>
+                <input type="text" class="form-control" placeholder="Username" name="uname" id="uname" value={{stud_data[3]}} required="">
             </div>
-          </div>
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
+            <div class="form-holder">
+                <span class="lnr lnr-phone-handset"></span>
+                <input type="phone" class="form-control" placeholder="Phone Number" name="mobile" id="mobile" value={{stud_data[4]}} required="">
+            </div>
+            <div class="form-holder">
+                <span class="lnr lnr-envelope"></span>
+                <input type="email" class="form-control" placeholder="Mail" name="email" id="email" value={{stud_data[5]}} required="">
+            </div>
+            <div class="form-holder">
+                <span class="">Year</span>
+                <select id="year" name="year" placeholder="Year" style="margin-left: 50px;">
+                    <option value={{stud_data[6]}} selected>{{stud_data[6]}}</option>
+                    <option value="FE">FE</option>
+                    <option value="SE">SE</option>
+                    <option value="TE">TE</option>
+                    <option value="BE">BE</option>
+                </select>
+            </div>
+            <button>
+                    <span>Save changes</span>
+                </button>
+            <a href="/student_dashboard.html" class="signup-image-link">BACK</a>
+        </form>
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="{{url_for('static',filename = 'assets/vendors/js/vendor.bundle.base.js')}}"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="{{url_for('static',filename = 'assets/vendors/chart.js/Chart.min.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/vendors/flot/jquery.flot.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/vendors/flot/jquery.flot.resize.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/vendors/flot/jquery.flot.categories.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/vendors/flot/jquery.flot.fillbetween.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/vendors/flot/jquery.flot.stack.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/vendors/flot/jquery.flot.pie.js')}}"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="{{url_for('static',filename = 'assets/js/off-canvas.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/js/hoverable-collapse.js')}}"></script>
-    <script src="{{url_for('static',filename = 'assets/js/misc.js')}}"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="{{url_for('static',filename = 'assets/js/dashboard.js')}}"></script>
-    <!-- End custom js for this page -->
-  </body>
+    </div>
+</body>
+
 </html>

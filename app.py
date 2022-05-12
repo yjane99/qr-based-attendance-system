@@ -1,5 +1,3 @@
-#from crypt import methods
-#from pickle import NONE
 from flask import Flask, render_template, request,session,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail,Message
@@ -300,10 +298,10 @@ def sregister():
         branch = request.form.get('branch')
         password= request.form.get('password')
         cpassword= request.form.get('cpassword')
-        file1 = open("students.txt", "a")
-        file1.write("\n")  # append mode
-        file1.write(sid)
-        file1.close()
+        # file1 = open("students.txt", "a")
+        # file1.write("\n")  # append mode
+        # file1.write(sid)
+        # file1.close()
 
 
         user=Sregister.query.filter_by(email=email).first()
@@ -508,12 +506,43 @@ def Scan():
     return render_template('scanqr.html')
 
 
-@app.route('/student_dashboard')
+@app.route('/Update.html', methods=["GET", "POST"])
 def update():
-    
-    import db1
-    return render_template('student_dashboard.html')
+    sid=session['Sid']
+    conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+    mycursor = conn.cursor()
+    sql = 'SELECT * FROM sregister WHERE Sid= %s'
+    tuple=(sid,)
+    mycursor.execute(sql,tuple)
+    sub_result = mycursor.fetchall()
+    conn.close()
+    print(sub_result[0])
 
+    if request.method == "POST":
+        uname = request.form.get('uname')
+        mobile = request.form.get('mobile')
+        email= request.form.get('email')
+        year = request.form.get('year')
+        print(year)
+
+        conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+        mycursor = conn.cursor()
+        sql = 'UPDATE sregister SET uname= %s, mobile=%s, email=%s, year=%s WHERE Sid= %s'
+        tuple=(uname, mobile, email, year, sid)
+        mycursor.execute(sql,tuple)
+        conn.commit()
+        conn.close()
+
+        conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+        mycursor = conn.cursor()
+        sql = 'SELECT * FROM sregister WHERE Sid= %s'
+        tuple=(sid,)
+        mycursor.execute(sql,tuple)
+        sub_result = mycursor.fetchall()
+        conn.close()
+        return render_template('Update.html', stud_data=sub_result[0])
+
+    return render_template('Update.html', stud_data=sub_result[0])
 
 
 @app.route('/line_chart')
@@ -581,7 +610,7 @@ def View():
                             j['total'] = j['total'] + 1
 
         print(res_list)
-                
+
         return render_template('view.html', params=params, regi=result,sub_list=sub_list ,total_attend = res_list,total_present = result_status[0][0])
 
 
