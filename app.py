@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request,session,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail,Message
@@ -338,9 +339,10 @@ def slogin():
         if account:
             session['loggedin'] = True
             session['Sid'] = account['Sid']
+            session['name'] = account['name']
             session['email'] = account['email']
             msg = 'Logged in successfully !'
-            return render_template('student_dashboard.html', msg = msg)
+            return redirect(url_for('sdashboard'))
         else:
             msg = 'Incorrect username / password !'
     return render_template('slogin.html', msg = msg)
@@ -428,9 +430,60 @@ def Attendance():
 
     return render_template("attendence.html")
 
-@app.route("/student_dashboard.html")
+@app.route("/student_dashboard.html",methods=['POST','GET'])
 def sdashboard():
-    return render_template("student_dashboard.html", params=params)
+    sid=session['Sid']
+    name=session['name'].capitalize()
+    conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+    mycursor = conn.cursor()
+    #sql = 'SELECT * FROM attend WHERE Sid= %s AND Date IN (Select MAX(Date) from attend Where Sid =%s)'
+    sql='SELECT year FROM sregister WHERE Sid= %s'
+    tuple=(sid,)
+    mycursor.execute(sql,tuple)
+    sub_result = mycursor.fetchall()
+    year=sub_result[0][0]
+    attend_sql='SELECT * FROM attend WHERE Sid= %s AND Year =%s AND Date IN (Select MAX(Date) from attend Where Sid =%s)'
+    attend_tuple=(sid,year,sid)
+    mycursor.execute(attend_sql,attend_tuple)
+    result=mycursor.fetchall()
+    status_sql='SELECT Status,Subject FROM attend WHERE Sid= %s AND Year =%s'
+    status_tuple=(sid,year)
+    mycursor.execute(status_sql,status_tuple)
+    status_result=mycursor.fetchall()
+    conn.close()
+    #print(status_result)
+    sub_list=[]
+    res_list=[]
+    total=0
+    attend=0
+    for i in status_result:
+        if i[1] not in sub_list:
+            sub_list.append(i[1])
+            if i[0]=='P':
+
+                obj={'sub':i[1],'attend':1,'total':1}
+                total=total+1
+                attend=attend+1
+            else:
+                obj={'sub':i[1],'attend':0,'total':1}
+                total=total+1
+            res_list.append(obj)
+        else:
+            for j in res_list:
+                if j['sub']==i[1]:
+                    if i[0]=='P':
+                        j['attend'] = j['attend'] + 1
+                        j['total'] = j['total'] + 1
+                        total=total+1
+                        attend=attend+1
+                    else:
+                        j['total'] = j['total'] + 1
+                        total=total+1
+    print(res_list)
+    #print(attend,total)
+    percentage =int((attend/total)*100)
+    print(name)
+    return render_template("student_dashboard.html", params=params,s_name=name,attendance=result,overall=res_list,percentage=percentage)
 
 @app.route("/parent_dashboard.html")
 def pdashboard():
