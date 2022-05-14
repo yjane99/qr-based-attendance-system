@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" />
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 </head>
 
@@ -77,35 +78,27 @@
                 <p> Select Year, Branch and Subject to view Attendance</p>
                 {% else %}
                 <table class="table" id="table1">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Sr. NO.</th>
+                            <th>IRN</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Date</th>
 
+                        </tr>
+                    </thead>
                     <tbody>
-
-                        <thead>
-                            <tr>
-                                <th>Sr. NO.</th>
-                                <th>IRN</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Date</th>
-
-                            </tr>
-                        </thead>
-
                         {% for data in range(0,regi|length) %}
-
                         <tr>
                             <td>{{data+1}}</td>
                             <td>{{regi[data][1]}}</td>
                             <td>{{regi[data][2]}}</td>
                             <td>{{regi[data][8]}}</td>
                             <td>{{regi[data][10]}}</td>
-
                         </tr>
-
                         {% endfor %}
-
                     </tbody>
-
                 </table>
                 <br />
                 <button onclick="ExportToExcel1('xlsx')">Export table to excel</button>
@@ -115,7 +108,6 @@
                 <table class="table" id="table2">
 
                     <tbody>
-
                         <thead>
                             <tr>
                                 <th>Sr. NO.</th>
@@ -125,7 +117,6 @@
                             </tr>
                         </thead>
                         {% for data in range(0,total_attend|length) %}
-
                         <tr>
                             <td>{{data+1}}</td>
                             <td>{{total_attend[data]['sid']}}</td>
@@ -133,11 +124,8 @@
                             <td>{{total_attend[data]['attend']}} / {{total_attend[data]['total']}}</td>
 
                         </tr>
-
                         {% endfor %}
-
                     </tbody>
-
                 </table>
                 <br \>
                 <button onclick="ExportToExcel2('xlsx')">Export table to excel</button>
@@ -161,8 +149,8 @@
             localStorage.setItem("year", year);
             localStorage.setItem("branch", branch);
             localStorage.setItem("sub", sub);
-            localStorage.setItem("from",fromDate);
-            localStorage.setItem("to",toDate);
+            localStorage.setItem("from", fromDate);
+            localStorage.setItem("to", toDate);
         }
         function ExportToExcel1(type, fn, dl) {
             var elt = document.getElementById('table1');
@@ -174,8 +162,8 @@
             var branch = localStorage.getItem("branch");
             var sub = localStorage.getItem("sub");
             var from = localStorage.getItem('from');
-            var to =localStorage.getItem('to');
-            var fileName = from + "_" + to + "_" + year.toUpperCase() + "_" + branch.toUpperCase() + "_" + sub.toUpperCase() + "_"+"format1"+".";
+            var to = localStorage.getItem('to');
+            var fileName = from + "_" + to + "_" + year.toUpperCase() + "_" + branch.toUpperCase() + "_" + sub.toUpperCase() + "_" + "format1" + ".";
             return dl ?
                 XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
                 XLSX.writeFile(wb, fn || (fileName + (type || 'xlsx')));
@@ -191,8 +179,8 @@
             var branch = localStorage.getItem("branch");
             var sub = localStorage.getItem("sub");
             var from = localStorage.getItem('from');
-            var to =localStorage.getItem('to');
-            var fileName = from + "_" + to + "_" + year.toUpperCase() + "_" + branch.toUpperCase() + "_" + sub.toUpperCase() + "_"+"format2"+".";
+            var to = localStorage.getItem('to');
+            var fileName = from + "_" + to + "_" + year.toUpperCase() + "_" + branch.toUpperCase() + "_" + sub.toUpperCase() + "_" + "format2" + ".";
             return dl ?
                 XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
                 XLSX.writeFile(wb, fn || (fileName + (type || 'xlsx')));
