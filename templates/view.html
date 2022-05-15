@@ -2,20 +2,31 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" />
-    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Detail Attendance</title>
+    <link rel="stylesheet"
+        href="{{url_for('static',filename = 'assets/vendors/mdi/css/materialdesignicons.min.css')}}" />
+    <link rel="stylesheet"
+        href="{{url_for('static',filename = 'assets/vendors/flag-icon-css/css/flag-icon.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/vendors/css/vendor.bundle.base.css')}}" />
+    <link rel="stylesheet"
+        href="{{url_for('static',filename = 'assets/vendors/font-awesome/css/font-awesome.min.css')}}" />
+    <link rel="stylesheet"
+        href="{{url_for('static',filename = 'assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/css/style.css')}}" />
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container mt-1">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <h1>Student Attendance</h1>
+                <h1>Students' Detailed Attendance</h1>
                 <form method="POST" class="register-form" id="register-form" action="/view.html">
                     <div class="form-holder">
-                        <span class="">year</span>
-                        <select id="year" name="year" placeholder="Year" style="margin-left: 50px">
+                        <span class="">Year</span>
+                        <select id="year" name="year" placeholder="Year" style="margin-left: 71px">
                             <option value="none" selected disabled hidden>
                                 Select your Academic Year
                             </option>
@@ -40,7 +51,7 @@
                     <br />
                     <div class="form-holder">
                         <span class="">Subject</span>
-                        <select id="subject" name="subject" placeholder="Branch" style="margin-left: 50px">
+                        <select id="subject" name="subject" placeholder="Branch" style="margin-left: 47px">
                             <option value="none" selected disabled hidden>
                                 Select the Subject
                             </option>
@@ -54,28 +65,31 @@
                     <br />
                     <div class="form-holder">
                         <span class="">From Date</span>
-                        <input type="date" id="from-date" name="from-date">
+                        <input type="date" id="from-date" name="from-date" style="margin-left: 27px">
                     </div>
 
                     <br />
                     <div class="form-holder">
                         <span class="">To Date</span>
-                        <input type="date" id="to-date" name="to-date">
+                        <input type="date" id="to-date" name="to-date" style="margin-left: 48px">
                     </div>
 
                     <br />
 
-                    <button onclick="storeRecord()">
+                    <button onclick="storeRecord()" class="btn btn-success">
                         <span>View Attendance</span>
                     </button>
 
-                    <a href="/" class="signup-image-link">Cancel</a>
+                    <a href="/Teacher_dashboard.html" class="btn"
+                        style="background-color: red; color:aliceblue">Cancel</a>
                 </form>
 
                 <br />
 
                 {% if regi|length ==0 %}
-                <p> Select Year, Branch and Subject to view Attendance</p>
+                <div class="alert alert-info">
+                    <strong>Info!</strong> Please select Year, Branch and Subject to view detailed attendance report.
+                </div>
                 {% else %}
                 <table class="table" id="table1">
                     <thead class="thead-dark">
@@ -101,21 +115,20 @@
                     </tbody>
                 </table>
                 <br />
-                <button onclick="ExportToExcel1('xlsx')">Export table to excel</button>
+                <button class="btn" style="background-color: green; color:aliceblue" onclick="ExportToExcel1('xlsx')">Export table to excel</button>
 
                 <hr />
 
                 <table class="table" id="table2">
-
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Sr. NO.</th>
+                            <th>IRN</th>
+                            <th>Name</th>
+                            <th>Total Attendance </th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <thead>
-                            <tr>
-                                <th>Sr. NO.</th>
-                                <th>IRN</th>
-                                <th>Name</th>
-                                <th>Total Attendance </th>
-                            </tr>
-                        </thead>
                         {% for data in range(0,total_attend|length) %}
                         <tr>
                             <td>{{data+1}}</td>
@@ -128,7 +141,7 @@
                     </tbody>
                 </table>
                 <br \>
-                <button onclick="ExportToExcel2('xlsx')">Export table to excel</button>
+                <button class="btn" style="background-color: green; color:aliceblue" onclick="ExportToExcel2('xlsx')">Export table to excel</button>
                 {% endif %}
 
                 <!-- Pager -->
