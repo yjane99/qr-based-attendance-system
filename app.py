@@ -32,9 +32,8 @@ from dotenv import load_dotenv
 # loading environment variables
 load_dotenv()
 
-labels = [
-    'Java','Pyhton','C','C++','m1','m2'
-]
+sub_list=[{'lab':'os','sub':'Operating Systems'},{'lab': 'dbms', 'sub': 'Database Management System'},
+{'lab': 'cn', 'sub': 'Computer Networks'}, {'lab': 'uc', 'sub': 'Ubiquitous Computing'}, {'lab': 'dcs', 'sub': 'Distributed Computer System'}]
 
 
 values = [3.3,6.66,10,13.33,16.66,0,20,23.33,
@@ -253,7 +252,34 @@ def Login():
 
 @app.route("/Teacher_dashboard.html", methods=["GET", "POST"])
 def tdashboard():
-    return render_template('Teacher_dashboard.html')
+    email = session['email']
+    conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+    mycursor = conn.cursor()
+    #sql = 'SELECT * FROM attend WHERE Sid= %s AND Date IN (Select MAX(Date) from attend Where Sid =%s)'
+    sql='SELECT * FROM register WHERE email= %s'
+    tuple=(email,)
+    mycursor.execute(sql,tuple)
+    t_data = mycursor.fetchall()
+    conn.close()
+    print(t_data)
+    teacher_sub = decode_binary(t_data[0][4])
+    print(teacher_sub)
+    if request.method == "POST":
+        subject = request.form.getlist('subject')
+        
+        print(str(subject))
+        mobile = request.form.get('mobile')
+        email_updated= request.form.get('email')
+        conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
+        mycursor = conn.cursor()
+        #TODO: Solve 'Subject' update issue. !!!IMPORTANT!!! 
+        sql_update = 'UPDATE register SET email= %s, mobile= %s WHERE email= %s'
+        tuple_update=(email_updated, mobile, email)
+        mycursor.execute(sql_update,tuple_update)
+        conn.commit()
+        conn.close()
+        
+    return render_template('Teacher_dashboard.html', t_data=t_data[0], sub_list=sub_list, teacher_sub=teacher_sub)
 
 @app.route("/register.html", methods=['GET','POST'])
 def tregister():
@@ -482,7 +508,12 @@ def sdashboard():
                         total=total+1
     print(res_list)
     #print(attend,total)
-    percentage =int((attend/total)*100)
+    if attend !=0:
+
+        percentage =int((attend/total)*100)
+    else:
+        percentage=0
+
     print(name)
     return render_template("student_dashboard.html", params=params,s_name=name,attendance=result,overall=res_list,percentage=percentage)
 
