@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request,session,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail,Message
@@ -247,12 +246,14 @@ def Login():
         login = Register.query.filter_by(email=email, password=password).first()
         if login is not None:
             session['email']=email
-            return render_template('Teacher_dashboard.html',params=params)
+            return redirect(url_for('tdashboard'))
         else:
             flash("plz enter right password",'error')
             return render_template('login.html',params=params)
 
-
+@app.route("/Teacher_dashboard.html", methods=["GET", "POST"])
+def tdashboard():
+    return render_template('Teacher_dashboard.html')
 
 @app.route("/register.html", methods=['GET','POST'])
 def tregister():
