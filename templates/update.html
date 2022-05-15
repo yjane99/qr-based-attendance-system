@@ -1,63 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <title>Update Profile Form</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-        <!-- LINEARICONS -->
-        <link rel="stylesheet" href="{{url_for('static',filename = 'fonts2/linearicons/style.css')}}">
-    
-        <!-- STYLE CSS -->
-        <link rel="stylesheet" href="{{url_for('static',filename = 'css2/style.css')}}">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>Update Profile Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- LINEARICONS -->
+    <link rel="stylesheet" href="{{url_for('static',filename = 'fonts2/linearicons/style.css')}}">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css2/style.css')}}">
+</head>
 
 <body>
     <div class="wrapper">
         <div class="inner">
-        <form method="POST" class="register-form" id="register-form" action="/Update.html">
-            <h3>Update your student profile.</h3>
-            <div class="form-holder">
-                <span class="">SID : {{stud_data[1]}}</span>
-                <br>
-            </div>
-            <div class="form-holder">
-                <span class="">NAME : {{stud_data[2]}}</span>
-                <br>
-            </div>
-            <div class="form-holder">
-                <span class="">Branch : {{stud_data[7]}}</span>
-                <br>
-            </div>
-            <div class="form-holder">
-                <span class="lnr lnr-user"></span>
-                <input type="text" class="form-control" placeholder="Username" name="uname" id="uname" value={{stud_data[3]}} required="">
-            </div>
-            <div class="form-holder">
-                <span class="lnr lnr-phone-handset"></span>
-                <input type="phone" class="form-control" placeholder="Phone Number" name="mobile" id="mobile" value={{stud_data[4]}} required="">
-            </div>
-            <div class="form-holder">
-                <span class="lnr lnr-envelope"></span>
-                <input type="email" class="form-control" placeholder="Mail" name="email" id="email" value={{stud_data[5]}} required="">
-            </div>
-            <div class="form-holder">
-                <span class="">Year</span>
-                <select id="year" name="year" placeholder="Year" style="margin-left: 50px;">
-                    <option value={{stud_data[6]}} selected>{{stud_data[6]}}</option>
-                    <option value="FE">FE</option>
-                    <option value="SE">SE</option>
-                    <option value="TE">TE</option>
-                    <option value="BE">BE</option>
-                </select>
-            </div>
-            <button>
+            <form method="POST" class="register-form" id="register-form" action="/Update.html">
+                <h3>Update your student profile.</h3>
+                <div class="form-holder">
+                    <span class="">SID : {{stud_data[1]}}</span>
+                    <br>
+                </div>
+                <div class="form-holder">
+                    <span class="">NAME : {{stud_data[2]}}</span>
+                    <br>
+                </div>
+                <div class="form-holder">
+                    <span class="">Branch : {{stud_data[7]}}</span>
+                    <br>
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-user"></span>
+                    <input type="text" class="form-control" placeholder="Username" name="uname" id="uname"
+                        value={{stud_data[3]}} required="">
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-phone-handset"></span>
+                    <input type="phone" class="form-control" placeholder="Phone Number" name="mobile" id="mobile"
+                        value={{stud_data[4]}} required="">
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-envelope"></span>
+                    <input type="email" class="form-control" placeholder="Mail" name="email" id="email"
+                        value={{stud_data[5]}} required="">
+                </div>
+                <div class="form-holder">
+                    <span class="">Year</span>
+                    <select id="year" name="year" placeholder="Year" style="margin-left: 50px;">
+                        <option value={{stud_data[6]}} selected>{{stud_data[6]}}</option>
+                        <option value="FE-SEM-I">FE SEM-I</option>
+                        <option value="FE-SEM-II">FE SEM-II</option>
+                        <option value="SE-SEM-I">SE SEM-I</option>
+                        <option value="SE-SEM-II">SE SEM-II</option>
+                        <option value="TE-SEM-I">TE SEM-I</option>
+                        <option value="TE-SEM-II">TE SEM-II</option>
+                        <option value="BE-SEM-I">BE SEM-I</option>
+                        <option value="BE-SEM-II">BE SEM-II</option>
+                    </select>
+                </div>
+                <button>
                     <span>Save changes</span>
                 </button>
-            <a href="/student_dashboard.html" class="signup-image-link">BACK</a>
-        </form>
-    </div>
+                <a href="/student_dashboard.html" class="signup-image-link">BACK</a>
+            </form>
+        </div>
     </div>
 </body>
 

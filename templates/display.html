@@ -28,12 +28,16 @@
                         <span class="">Year</span>
                         <select id="year" name="year" placeholder="Year" style="margin-left: 71px">
                             <option value="none" selected disabled hidden>
-                                Select your Academic Year
+                                Select your Academic Year & Semester
                             </option>
-                            <option value="FE">FE</option>
-                            <option value="SE">SE</option>
-                            <option value="TE">TE</option>
-                            <option value="BE">BE</option>
+                            <option value="FE-SEM-I">FE SEM-I</option>
+                            <option value="FE-SEM-II">FE SEM-II</option>
+                            <option value="SE-SEM-I">SE SEM-I</option>
+                            <option value="SE-SEM-II">SE SEM-II</option>
+                            <option value="TE-SEM-I">TE SEM-I</option>
+                            <option value="TE-SEM-II">TE SEM-II</option>
+                            <option value="BE-SEM-I">BE SEM-I</option>
+                            <option value="BE-SEM-II">BE SEM-II</option>
                         </select>
                     </div>
                     <br />
@@ -69,7 +73,7 @@
                     </button>
 
                     <a href="/Teacher_dashboard.html" class="btn"
-                    style="background-color: red; color:aliceblue">Cancel</a>
+                        style="background-color: red; color:aliceblue">Cancel</a>
                 </form>
 
                 <br />
@@ -77,7 +81,7 @@
                 {% if regi|length ==0 %}
                 <div class="alert alert-info">
                     <strong>Info!</strong> Please select Year, Branch and Subject to view detailed attendance report.
-                </div>                {% else %}
+                </div> {% else %}
                 <table class="table" id="studtable">
                     <thead class="thead-dark">
                         <tr>
@@ -100,7 +104,8 @@
                     </tbody>
 
                 </table>
-                <button class="btn" style="background-color: green; color:aliceblue" onclick="ExportToExcel('xlsx')">Export table to excel</button>
+                <button class="btn" style="background-color: green; color:aliceblue"
+                    onclick="ExportToExcel('xlsx')">Export table to excel</button>
                 <br />
                 <p>Total Present : {{total_present}}</p><br>
                 {% endif %}

@@ -28,12 +28,16 @@
                         <span class="">Year</span>
                         <select id="year" name="year" placeholder="Year" style="margin-left: 71px">
                             <option value="none" selected disabled hidden>
-                                Select your Academic Year
+                                Select your Academic Year & Semester
                             </option>
-                            <option value="FE">FE</option>
-                            <option value="SE">SE</option>
-                            <option value="TE">TE</option>
-                            <option value="BE">BE</option>
+                            <option value="FE-SEM-I">FE SEM-I</option>
+                            <option value="FE-SEM-II">FE SEM-II</option>
+                            <option value="SE-SEM-I">SE SEM-I</option>
+                            <option value="SE-SEM-II">SE SEM-II</option>
+                            <option value="TE-SEM-I">TE SEM-I</option>
+                            <option value="TE-SEM-II">TE SEM-II</option>
+                            <option value="BE-SEM-I">BE SEM-I</option>
+                            <option value="BE-SEM-II">BE SEM-II</option>
                         </select>
                     </div>
                     <br />
@@ -115,7 +119,8 @@
                     </tbody>
                 </table>
                 <br />
-                <button class="btn" style="background-color: green; color:aliceblue" onclick="ExportToExcel1('xlsx')">Export table to excel</button>
+                <button class="btn" style="background-color: green; color:aliceblue"
+                    onclick="ExportToExcel1('xlsx')">Export table to excel</button>
 
                 <hr />
 
@@ -141,7 +146,8 @@
                     </tbody>
                 </table>
                 <br \>
-                <button class="btn" style="background-color: green; color:aliceblue" onclick="ExportToExcel2('xlsx')">Export table to excel</button>
+                <button class="btn" style="background-color: green; color:aliceblue"
+                    onclick="ExportToExcel2('xlsx')">Export table to excel</button>
                 {% endif %}
 
                 <!-- Pager -->
