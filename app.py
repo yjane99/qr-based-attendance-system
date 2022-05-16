@@ -234,7 +234,7 @@ def About():
 def Login():
     if (request.method== "GET"):
         if('email' in session and session['email']):
-            return render_template('Teacher_dashboard.html',params=params)
+            return render_template('login.html',params=params)
         else:
             return render_template("login.html", params=params)
 
