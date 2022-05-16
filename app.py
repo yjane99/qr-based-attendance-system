@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request,session,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail,Message
@@ -167,12 +168,22 @@ def send_mail(email_f):
 
 def decode_binary(binary_list):
     st=binary_list.decode()
-    res = st.strip('][').split(', ')
+    res = st.strip('\"][\"').split(', ')
     temp=[]
     for i in res:
-        temp.append(i.strip('""'))
+        temp.append(i.strip('\'\''))
 
     return temp
+
+def encode_binary(sub):
+
+    temp=[]
+    for i in sub:
+        temp.append(str(i))
+    te = str(temp)
+
+    return te
+
 
 def mark_attendance(Sid,Time):
     ts=time.time()
@@ -262,23 +273,28 @@ def tdashboard():
     mycursor.execute(sql,tuple)
     t_data = mycursor.fetchall()
     conn.close()
-    print(t_data)
+    # print(t_data)
     teacher_sub = decode_binary(t_data[0][4])
-    print(teacher_sub)
+    # print(teacher_sub)
     if request.method == "POST":
         subject = request.form.getlist('subject')
-        
-        print(str(subject))
+        print(encode_binary(subject))
+       
         mobile = request.form.get('mobile')
         email_updated= request.form.get('email')
         conn = sql_db.connect(user='root',host='localhost',password ='',database='attendence')
         mycursor = conn.cursor()
-        #TODO: Solve 'Subject' update issue. !!!IMPORTANT!!! 
-        sql_update = 'UPDATE register SET email= %s, mobile= %s WHERE email= %s'
-        tuple_update=(email_updated, mobile, email)
+        sql_update = '''UPDATE register SET email= %s, mobile= %s, subject= JSON_SET(subject,'$' , %s) WHERE email= %s'''
+        tuple_update=(email_updated, mobile, str(subject), email)
         mycursor.execute(sql_update,tuple_update)
         conn.commit()
+        sql='SELECT * FROM register WHERE email= %s'
+        tuple=(email,)
+        mycursor.execute(sql,tuple)
+        t_data = mycursor.fetchall()
         conn.close()
+        teacher_sub = decode_binary(t_data[0][4])
+        return render_template('Teacher_dashboard.html', t_data=t_data[0], sub_list=sub_list, teacher_sub=teacher_sub)
         
     return render_template('Teacher_dashboard.html', t_data=t_data[0], sub_list=sub_list, teacher_sub=teacher_sub)
 
@@ -309,7 +325,7 @@ def tregister():
         else:
              flash('You have registered successfully','success')
             
-        entry = Register(name=name,subject=subject,mobile=mobile,email=email,password=password,cpassword=cpassword)
+        entry = Register(name=name,subject=str(subject),mobile=mobile,email=email,password=password,cpassword=cpassword)
         db.session.add(entry)
         db.session.commit()
     return render_template('register.html',params=params)
