@@ -114,10 +114,10 @@ class Student_query(db.Model):
 
 class Sregister(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    sid = db.Column(db.String(50), nullable=False)
+    Sid = db.Column(db.String(50), nullable=False)
     name = db.Column(db.String(50), nullable=False)
     uname = db.Column(db.String(50), nullable=False)
-    mobile = db.Column(db.Integer(), nullable=False)
+    mobile = db.Column(db.String(10), nullable=False)
     email =  db.Column(db.String(50), nullable=False)
     year =  db.Column(db.String(50), nullable=False)
     branch =  db.Column(db.String(50), nullable=False)
@@ -151,10 +151,11 @@ class Contact(db.Model):
 def send_mail(email_f):
     email=email_f['email']
     file_name=email_f['file']
+    sub=email_f['sub']
     try:
         subject="Attendance QR Code for lecture"
         msg = Message(subject, sender = os.getenv('SMTP_MAIL_USERNAME'), recipients = [email])
-        msg.body = '''Dear Student, Your QR code for the lecture is attached herewith, this QR code is valid only for 35 minutes.'''
+        msg.body = 'Dear Student, Your QR code for the ' + sub +  ' lecture is attached herewith, this QR code is valid only for 35 minutes.'
         with app.open_resource(os.getcwd() + "\\" + file_name) as fp:  
             msg.attach(file_name,"image/png",fp.read())  
         mail.send(msg)
@@ -346,7 +347,7 @@ def sregister():
         else:
              flash('You have registtered succesfully','success')
             
-        entry = Sregister(sid=sid,name=name,mobile=mobile,uname=uname,email=email,year=year,branch=branch,password=password,cpassword=cpassword)
+        entry = Sregister(Sid=sid,name=name,mobile=mobile,uname=uname,email=email,year=year,branch=branch,password=password,cpassword=cpassword)
     
         db.session.add(entry)
         db.session.commit()
@@ -567,7 +568,7 @@ def Generate():
             email=result[Sid][1]
             name=result[Sid][2]
             file_name=str(result[Sid][0]+'.png')
-            email_file.append({'email':email,'file':file_name})
+            email_file.append({'email':email,'file':file_name, 'sub': subject})
             entry = Attend(Sid=data,Semail=email,Sname=name,Temail=session['email'],branch=branch,Subject=subject,Year=year,Status='A',Time=lecture_time,Date=lecture_date,QRtime=str(append_ts))
             db.session.add(entry)
             db.session.commit()
